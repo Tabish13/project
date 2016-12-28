@@ -1,0 +1,125 @@
+body{
+  background-color:#2fd0ff;
+
+  }
+  #right{
+    text-align: right;
+  }
+  #navi a{
+    width: 100%;
+    margin: 1em 0.5em;
+    padding: 0.5em;
+  background-color: white;
+  border-radius: 7px;
+
+    color: black;
+    padding: 0.5em;
+  }
+  #navi a:active{
+    text-decoration: none;
+  }
+  #navi a:hover{
+    text-decoration: none;
+  }
+
+h1{
+  font-size: 3em;
+  text-align: center;
+}
+h1 span{
+  font-size: 0.5em;
+  background-color: black;
+  color: #ad1305;
+  border-radius: 50%;
+  padding: 0.3em;
+  display: table;
+  vertical-align: middle;
+  margin-bottom: 0.4em;
+}
+h2{
+  text-align: center;
+  padding-bottom: 0.3em;
+}
+ul{
+  list-style: none;
+  font-size: 1.2em;
+position: fixed;
+}
+li{
+  width: 100%;
+  margin: 1em 0.5em;
+  padding: 0.3em;
+background-color: white;
+border-radius: 10px;
+}
+li a {
+  color: black;
+  padding: 1em;
+}
+li a:active{
+  text-decoration: none;
+}
+li a:hover{
+  text-decoration: none;
+}
+.top{
+text-align: center;
+}
+.top input{
+  width: 5em;
+  /*text-align: center;*/
+}
+
+#custdetails, #systemconfig, #productdetails,#paymentoption{
+margin-left: 8em;
+  }
+  input, textarea{
+    text-transform: capitalize;
+    border-style: ridge;
+    border-color: #1e2691;
+    }
+ #custdetails input, textarea, label{
+  min-width: 15em;
+margin: 0.6em;
+}
+#systemconfig input, label{
+ min-width: 15em;
+ margin: 0.6em;
+
+}
+#paymentoption input, textarea, label{
+ min-width: 15em;
+margin: 0.6em;
+}
+#addres{
+  width: 31.5em;
+}
+#productdetails input, select, label{
+ min-width: 15em;
+ margin: 0.6em;
+
+}
+#paymentoption{
+  padding-bottom: 100px;
+}
+#products select,#products input,#products label{
+  min-width: 5em;
+  margin: 0.6em;
+}
+#Date{
+  width: 6em;
+}
+select #branch{
+  width: 3em;
+}
+#buttons{
+  text-align: center;
+
+}
+#buttons input{
+  background-color: #1e2691;
+  color: #f1f1f1;
+padding: 0.5em 1em;
+margin: 0 0.5em;
+width: 25%;
+}

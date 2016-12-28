@@ -1,0 +1,92 @@
+body{
+background-color: #2fd0ff;
+  }
+  #inwardpage{
+
+    text-align: center;
+  }
+
+  #right{
+    text-align: right;
+  }
+h1{
+  font-weight: bold;
+  font-size: 2.7em;
+  text-align: center;
+
+  padding: 0.5em;
+}
+h1 span{
+  font-size: 0.5em;
+  background-color: black;
+  color: #ad1305;
+  border-radius: 50%;
+  padding: 0.3em;
+  display: table;
+  vertical-align: middle;
+  margin-bottom: 0.4em;
+}
+h3{
+  text-align: center;
+}
+.inpage{
+  background-color: white;
+  box-shadow: 10px 10px 5px #888888;
+text-align: left;
+}
+label{
+
+  text-transform: capitalize;
+  padding: 0.8em 0.3em;
+  width: 15em;
+}
+input, textarea, select{
+  text-transform: capitalize;
+
+  /*border: none;
+  border-bottom: 1px solid black;*/
+border-style: ridge;
+border-color: #005ce6;
+}
+textarea{
+
+  height: 3em;
+  resize: none;
+}
+input, textarea{
+  width: 15em;
+}
+textarea{
+  vertical-align: middle;
+}
+/*.two input, textarea{
+  width: 76%;
+}*/
+
+#navi a{
+  width: 100%;
+  margin: 1em 0.5em;
+  padding: 0.5em;
+background-color: white;
+border-radius: 7px;
+
+  color: black;
+  padding: 0.5em;
+}
+#navi a:active{
+  text-decoration: none;
+}
+#navi a:hover{
+  text-decoration: none;
+}
+#buttons{
+  text-align: center;
+
+}
+#buttons input{
+  background-color: #0000b3;
+  color: #f1f1f1;
+padding: 0.5em 1em;
+margin: 0 0.5em;
+width: 25%;
+}

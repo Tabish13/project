@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="datatable/css/jquery.dataTables.min.css">
+	<script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="datatable/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" href="css/display.css">
+
+</head>
+
+<body>
+	<div class="row" id="navi">
+	<div class="col-xs-6">
+
+	<a href="index.html">Home</a></div>
+	<div class="col-xs-6"  id="right">
+
+			<a href="booking.html">Booking Form</a>
+	</div>
+	</div>
+		<table id="bookingstable" class="display" cellspacing="0" width="100%">
+	</table>
+	<script type="text/javascript">
+		var _ = require('underscore');
+		var db = require('../db/db.js');
+		db.bookings.loadDatabase();
+		var table;
+		var datatable = function(data) {
+			return $('#bookingstable').DataTable({
+				destroy: true,
+				data: data,
+				order: [
+					[0, "desc"]
+				],
+				columns: [{
+					title: "Sheet No"
+				}, {
+					title: "Name"
+				}, {
+					title: "Date"
+				}, {
+					title: "Contact No"
+				}, {
+					title: "Total Cost"
+				}, {
+					title: "Advance"
+				}, {
+					title: "Balance"
+				}, {
+					title: "Payment Option"
+				}, {
+					title: ""
+				}, {
+					title: ""
+				}],
+				"columnDefs": [{
+					"targets": -2,
+					"data": null,
+					"defaultContent": '<button value="edit" style="background-color: Green;border: none;cursor: pointer;color: white;padding: 5px 5px;">Edit</button>'
+				}, {
+					"targets": -1,
+					"data": null,
+					"defaultContent": '<button value="reprint" style="background-color: Blue;border: none;cursor: pointer;color: white;padding: 5px 5px;">RePrint</button>'
+				}, {
+					className: "dt-center",
+					"targets": "_all"
+				}]
+			});
+		};
+		var getData = function() {
+			var dataSet = [];
+
+			db.bookings.find().sort({
+				sheetno: -1
+			}).exec(function(err, docs) {
+				if (!err) {
+					_.each(docs, function(value) {
+						if (_.has(value, "sheetno")) {
+							var data = _.values(_.pick(value, 'sheetno', 'name', 'date', 'contact', 'totalcost', 'advancepayment', 'balance', 'paymentoption'));
+							data[4] = ' Rs. ' + data[4].replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+							data[5] = ' Rs. ' + data[5].replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+							data[6] = ' Rs. ' + data[6].replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+							dataSet.push(data);
+						}
+					});
+					//console.log(dataSet);
+					table = datatable(dataSet);
+				} else {
+					console.log(err);
+				}
+			});
+		}
+
+		getData();
+
+
+		function calculatetotal() {
+			var amountsinputs = $('.amount');
+			var totalamount = 0;
+			for (var i = 0; i < amountsinputs.length; i++) {
+				//alert($(amountsinputs[i]).val())
+				var toadd = $(amountsinputs[i]).val();
+				if (toadd.length > 0) {
+					totalamount = totalamount + parseInt(toadd);
+				}
+			}
+			return totalamount;
+		}
+
+		var bookingsData = {
+			"sheetno": "",
+			"date": "",
+			"time": "",
+			"branch": "",
+			"name": "",
+			"address": "",
+			"pincode": "",
+			"dob": "",
+			"contact": "",
+			"emailid": "",
+			"processor": "",
+			"harddisk": "",
+			"ram": "",
+			"opticaldrive": "",
+			"screen": "",
+			"operatingsystem": "",
+			"graphic": "",
+			"antivirus": "",
+			"msoffice": "",
+			"productdetails": [{
+				"product": "",
+				"model": "",
+				"amount": ""
+			}],
+			"totalcost": "",
+			"advancepayment": "",
+			"balance": "",
+			"paymentoption": "",
+			"chequedetails": {
+				"chequedate": "",
+				"chequeno": "",
+				"bankname": "",
+				"chequeamount": ""
+			}
+
+		}
+		$(document).ready(function() {
+
+			var printingBooking;
+			//Any event on the div of the product modal and amount will calculate the total amount
+			$("#productdetails").keyup(function() {
+				var total = calculatetotal();
+				$("#total").val(total);
+			});
+
+			$("#advance,#productdetails").keyup(function() {
+				var fetchtotal = $('#total').val();
+				var advance = $('#advance').val();
+				var total = fetchtotal - advance;
+				$("#balance").val(total);
+			});
+
+			$("#payment").on("change", function() {
+
+				var sVal = $(this).val();
+				if (sVal == 'cheque') {
+					var $further =
+						'<label>Cheque Date : </label><input type="text" id="chequedate"><br><label>Cheque No. : </label><input type="text" id="chequeno"><br><label>Bank Name : </label><input type="text" id="bankname"><br><label>Amount : </label><input type="text" id="chequeamount"><br>'
+					$("#paying").html($further);
+				} else {
+					$("#paying").html("");
+				}
+			});
+
+			$('#bookingstable').on('click', 'button', function() {
+				var buttonName = $(this).attr("value");
+				var rowdata = table.row($(this).parents('tr')).data();
+				var sheetno = rowdata[0];
+
+				db.bookings.find({
+					"sheetno": sheetno
+				}, function(err, results) {
+					if (!err) {
+
+						$('#bookingformno').val(results[0].sheetno);
+						$('#Date').val(results[0].date);
+						$('#branch').val(results[0].branch);
+						$('#name').val(results[0].name);
+						$('#addres').val(results[0].address);
+						$('#pin').val(results[0].pincode);
+						$('#dob').val(results[0].dob);
+						$('#contact').val(results[0].contact);
+						$('#email').val(results[0].emailid);
+						$('#processor').val(results[0].processor);
+						$('#harddisk').val(results[0].harddisk);
+						$('#ram').val(results[0].ram);
+						$('#opticaldrive').val(results[0].opticaldrive);
+						$('#screen').val(results[0].screen);
+						$('#os').val(results[0].operatingsystem);
+						$('#graphic').val(results[0].graphic);
+						$('#antivirus').val(results[0].antivirus);
+						$('#office').val(results[0].msoffice);
+
+						var productDetails = results[0].productdetails;
+						var $productshtml = '<h3>Product Details</h3>';
+						for (i = 1; i <= productDetails.length; i++) {
+
+							var laptop = "";
+							var desktop = "";
+							var printer = "";
+							var accessories = "";
+							if (productDetails[i - 1].product == "laptop") {
+								laptop = "selected";
+							} else if (productDetails[i - 1].product == "desktop") {
+								desktop = "selected";
+							} else if (productDetails[i - 1].product == "printer") {
+								printer = "selected";
+							} else if (productDetails[i - 1].product == "accessories") {
+								accessories = "selected";
+							}
+							$productshtml = $productshtml + '<label>Product :</label><select name="product" class="product" id="product"><option value="laptop" ' + laptop + '>Laptop</option><option value="desktop" ' + desktop +
+								'>Desktop</option><option value="printer" ' + printer + '>Printer</option><option value="accessories" ' + accessories + '>Accessories</option></select><input type="text" name="model" placeholder="Model" class="model" value="' +
+								productDetails[i - 1].model + '"><input type="text" name="amount" placeholder="Amount" class="amount" value="' + productDetails[i - 1].amount + '"><br>';
+
+						}
+						$('#productdetails').html($productshtml);
+
+						//alert(JSON.stringify(productDetails));
+						$('#total').val(results[0].totalcost);
+						$('#advance').val(results[0].advancepayment);
+						$('#balance').val(results[0].balance);
+
+						$('#payment').val(results[0].paymentoption);
+						if (results[0].paymentoption === "cheque") {
+							var chequeDetails = results[0].chequedetails;
+							var $further = '<label>Cheque Date : </label><input type="text" id="chequedate" value="' + chequeDetails.chequedate + '"><br><label>Cheque No. : </label><input type="text" id="chequeno" value="' + chequeDetails.chequeno +
+								'"><br><label>Bank Name : </label><input type="text" id="bankname" value="' + chequeDetails.bankname + '"><br><label>Amount : </label><input type="text" id="chequeamount" value="' + chequeDetails.chequeamount + '"><br>'
+							$("#paying").html($further);
+						}
+
+						if (buttonName === "edit") {
+							$("#myModal").modal();
+						} else if (buttonName === "reprint") {
+
+							var printingBooking = {
+								"sheetno": results[0].sheetno,
+								"date": results[0].date,
+								"time": results[0].time,
+								"branch": results[0].branch,
+								"name": results[0].name,
+								"address": results[0].address,
+								"pincode": results[0].pincode,
+								"dob": results[0].dob,
+								"contact": results[0].contact,
+								"emailid": results[0].emailid,
+								"processor": results[0].processor,
+								"harddisk": results[0].harddisk,
+								"ram": results[0].ram,
+								"opticaldrive": results[0].opticaldrive,
+								"screen": results[0].screen,
+								"operatingsystem": results[0].operatingsystem,
+								"graphic": results[0].graphic,
+								"antivirus": results[0].antivirus,
+								"msoffice": results[0].msoffice,
+								"productdetails": results[0].productdetails,
+								"totalcost": results[0].totalcost,
+								"advancepayment": results[0].advancepayment,
+								"balance": results[0].balance,
+								"paymentoption": results[0].paymentoption,
+								"chequedetails": results[0].chequedetails
+							};
+
+							localStorage.printData = JSON.stringify(printingBooking);
+							localStorage.displayBooking = "displaybooking";
+							//document.location.href = 'inwardsprint.html';
+							document.location.href = './src/public/bookingprint.html';
+							//alert("Print save alert");
+						}
+
+					}
+				});
+
+
+			});
+
+
+
+			$('#updating').click(function() {
+				function getProductsModelsAmounts() {
+					var products = $('.product');
+					var models = $('.model');
+					var amounts = $('.amount');
+					var details = [];
+					for (var i = 0; i < amounts.length; i++) {
+						var detail = {};
+						detail.product = $(products[i]).val();
+						detail.model = $(models[i]).val();
+						detail.amount = $(amounts[i]).val();
+						details.push(detail);
+					}
+					return details;
+				};
+				var date = $('#Date').val();
+				var bookingformno = $('#bookingformno').val();
+				var branch = $('#branch').val();
+				var name = $('#name').val();
+				var address = $('#addres').val();
+				var pincode = $('#pin').val();
+				var dob = $('#dob').val();
+				var contact = $('#contact').val();
+				var email = $('#email').val();
+				var processor = $('#processor').val();
+				var harddisk = $('#harddisk').val();
+				var ram = $('#ram').val();
+				var opticaldrive = $('#opticaldrive').val();
+				var screen = $('#screen').val();
+				var os = $('#os').val();
+				var graphic = $('#graphic').val();
+				var antivirus = $('#antivirus').val();
+				var office = $('#office').val();
+				var pmaDetails = getProductsModelsAmounts();
+				var total = $('#total').val();
+				var advance = $('#advance').val();
+				var balance = $('#balance').val();
+				var payment = $('#payment').val();
+				var chequeDetails = undefined;
+
+				if (payment === "cheque") {
+					chequeDetails = {};
+					chequeDetails.chequedate = $('#chequedate').val();
+					chequeDetails.chequeno = $('#chequeno').val();
+					chequeDetails.bankname = $('#bankname').val();
+					chequeDetails.chequeamount = $('#chequeamount').val();
+				}
+
+				var bookingData = {
+					"sheetno": bookingformno,
+					"date": date,
+					"branch": branch,
+					"name": name,
+					"address": address,
+					"pincode": pincode,
+					"dob": dob,
+					"contact": contact,
+					"emailid": email,
+					"processor": processor,
+					"harddisk": harddisk,
+					"ram": ram,
+					"opticaldrive": opticaldrive,
+					"screen": screen,
+					"operatingsystem": os,
+					"graphic": graphic,
+					"antivirus": antivirus,
+					"msoffice": office,
+					"productdetails": pmaDetails,
+					"totalcost": total,
+					"advancepayment": advance,
+					"balance": balance,
+					"paymentoption": payment,
+					"chequedetails": chequeDetails
+				};
+				db.bookings.update({
+					sheetno: bookingformno
+				}, bookingData, {}, function(err, noDoc) {
+					if (!err) {
+						alert('You have updated ' + noDoc + ' document');
+						getData();
+					}
+				});
+			});
+
+		});
+	</script>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Edit Booking</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xs-4 top">
+							<label>Date : </label><br>
+							<input id="Date" readonly="readonly">
+
+						</div>
+
+						<div class="col-xs-4 top">
+							<label>Form number : </label><br>
+							<input id="bookingformno" readonly="readonly">
+
+						</div>
+						<div class="col-xs-4 top">
+							<label>Branch :  </label><br><input type="text" name="branch" value="Vasai" id="branch" readonly>
+							<!-- <select name="branch" id="branch">
+  <option value="Virar">Virar</option>
+  <option value="Vasai">Vasai</option>
+  <option value="Bhayander">Bhayander</option>
+
+</select> -->
+						</div>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-12">
+							<div id="custdetails">
+								<h3>Customer details</h3>
+								<label>Name :</label>
+								<input type="text" name="name" id="name"><br>
+								<label>Address :</label><br>
+								<textarea name="address" id="addres" rows="4"></textarea><br>
+								<label>PIN :</label>
+								<input type="text" name="pin" id="pin"><br>
+								<label>DOB :</label>
+								<input type="text" name="dob" id="dob"><br>
+								<label>Contact :</label>
+								<input type="text" name="contact" id="contact"><br>
+								<label>E-mail id :</label>
+								<input type="email" name="email" id="email"><br>
+
+							</div>
+							<div id="systemconfig">
+								<h3>System Configuration</h3>
+								<label>Processor :</label>
+								<input type="text" name="processor" id="processor"><br>
+								<label>Hard disk :</label>
+								<input type="text" name="harddisk" id="harddisk"><br>
+								<label>RAM :</label>
+								<input type="text" name="ram" id="ram"><br>
+								<label>Optical drive :</label>
+								<input type="text" name="opticaldrive" id="opticaldrive"><br>
+								<label>Screen :</label>
+								<input type="text" name="screen" id="screen"><br>
+								<label>Operating System :</label>
+								<input type="text" name="os" id="os"><br>
+								<label>Graphic :</label>
+								<input type="text" name="graphic" id="graphic"><br>
+								<label>Antivirus :</label>
+								<input type="text" name="antivirus" id="antivirus"><br>
+								<label>MS Office :</label>
+								<input type="text" name="office" id="office"><br>
+
+							</div>
+							<div id="productdetails">
+
+
+							</div>
+							<div>
+
+								<label>  Total : </label>
+								<input type="text" name="total" id="total" readonly="readonly"><br>
+								<label>  Advance : </label>
+								<input type="text" name="advance" id="advance"><br>
+								<label>  Balance : </label>
+								<input type="text" name="balance" id="balance" readonly="readonly"><br>
+							</div>
+							<div id="paymentoption">
+								<h3>Payment Options</h3>
+								<select name="payment" id="payment">
+  <option value="cash">Cash</option>
+  <option value="card">Card</option>
+  <option value="cheque" id="cheq">Cheque</option>
+</select><br>
+								<div id="paying"></div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" id="updating">Submit</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+
+</html>

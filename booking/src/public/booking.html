@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/booking.css">
+</head>
+
+<body>
+
+  <h1>CYBER P<span class="glyphicon glyphicon-off"></span>INT</h1>
+  <div class="container">
+    <div class="container row" id="navi">
+    <div class="col-xs-6">
+
+    <a href="index.html">Home</a></div>
+    <div class="col-xs-6"  id="right">
+
+    		<a href="displaybooking.html">Display Booking</a>
+    </div>
+    </div>
+    <h2>Booking Form</h2><br>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-3">
+                <ul>
+                    <li><a href="#custdetails">Customer details</span></a></li>
+                    <li><a href="#systemconfig">System Configuration</a></li>
+                    <li><a href="#productdetails">Product Details</a></li>
+                    <li><a href="#paymentoption">Payment Options</a></li>
+
+                </ul>
+
+            </div>
+            <div class="col-xs-9">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-xs-3 top">
+                          Date :
+                          <input id="Date" readonly="readonly">
+
+                      </div>
+
+                      <div class="col-xs-3 top">
+                          Form number :
+                          <input id="bookingformno" readonly="readonly">
+
+                      </div>
+                      <div class="col-xs-3 top">
+                          Branch : <input type="text" name="branch" value="Vasai" id="branch" readonly>
+                          <!-- <select name="branch" id="branch">
+            <option value="Virar">Virar</option>
+            <option value="Vasai">Vasai</option>
+            <option value="Bhayander">Bhayander</option>
+
+          </select> -->
+                      </div>
+                  </div>
+            </div><br>
+                <div id="custdetails">
+                    <h3>Customer details</h3>
+                    <label>Name :</label>
+                    <input type="text" name="name" id="name"><br>
+                    <label>Address :</label><br>
+                    <textarea name="address" id="addres" rows="4"></textarea><br>
+                    <label>PIN :</label>
+                    <input type="text" name="pin" id="pin"><br>
+                    <label>DOB :</label>
+                    <input type="text" name="dob" id="dob"><br>
+                    <label>Contact :</label>
+                    <input type="text" name="contact" id="contact"><br>
+                    <label>E-mail id :</label>
+                    <input type="email" name="email" id="email"><br>
+
+                </div>
+                <div id="systemconfig">
+                    <h3>System Configuration</h3>
+                    <label>Processor :</label>
+                    <input type="text" name="processor" id="processor"><br>
+                    <label>Hard disk :</label>
+                    <input type="text" name="harddisk" id="harddisk"><br>
+                    <label>RAM :</label>
+                    <input type="text" name="ram" id="ram"><br>
+                    <label>Optical drive :</label>
+                    <input type="text" name="opticaldrive" id="opticaldrive"><br>
+                    <label>Screen :</label>
+                    <input type="text" name="screen" id="screen"><br>
+                    <label>Operating System :</label>
+                    <input type="text" name="os" id="os"><br>
+                    <label>Graphic :</label>
+                    <input type="text" name="graphic" id="graphic"><br>
+                    <label>Antivirus :</label>
+                    <input type="text" name="antivirus" id="antivirus"><br>
+                    <label>MS Office :</label>
+                    <input type="text" name="office" id="office"><br>
+
+                </div>
+                <div id="productdetails">
+                    <h3>Product Details</h3>
+                    <div id="products"> <label>Product :</label>
+                        <select name="product" class="product" id="product">
+                       <option value="laptop">Laptop</option>
+                       <option value="desktop">Desktop</option>
+                       <option value="printer">Printer</option>
+                       <option value="accessories">Accessories</option>
+                    </select>
+                        <input type="text" name="model" placeholder="Model" class="model">
+                        <input type="text" name="amount" placeholder="Amount" class="amount">
+                        <button type="button" id="addp">ADD</button><br>
+                    </div>
+                    <label>  Total : </label>
+                    <input type="text" name="total" id="total" readonly="readonly"><br>
+                    <label>  Advance : </label>
+                    <input type="text" name="advance" id="advance"><br>
+                    <label>  Balance : </label>
+                    <input type="text" name="balance" id="balance" readonly="readonly"><br>
+                </div>
+<div id="paymentoption">
+<h3>Payment Options</h3>
+<select name="payment" id="payment">
+  <option value="cash">Cash</option>
+  <option value="card">Card</option>
+  <option value="cheque" id="cheq">Cheque</option>
+</select><br>
+<div id="paying"></div>
+</div>
+<div id="buttons">
+  <input type="button" value="Print & Save" id="printsave">
+  <input type="button" value="Save" id="save">
+  <input type="button" value="Cancel" id="cancel">
+</div><br>
+            </div>
+
+        </div>
+  </div>
+    </div>
+    <script src="js/scripts.js"></script>
+<script type="text/javascript">
+    var gui = require('nw.gui');
+    var numeral = require('numeral');
+    //@ Padding for adding padding to the numbers padding(Number,No_Digit_ToPad, charachter_to_pad); e.g: padding(1,6,'0')
+    var padding = require('../util/padding.js');
+    // @Making db connection and autoload is false load db by calling -- db.(inward/outwards/bookings).loadDatabase(); --
+    var db = require('../db/db.js');
+    db.bookings.loadDatabase();
+    db.bookings.ensureIndex({ fieldName: 'sheetno' , unique: true }, function (err) {
+});
+    $(document).ready(function(){
+        db.bookings.find({_id:"__autoid__"}, function(err, result) {
+                    if(result.length===0){
+                        db.bookings.getAutoincrementId();
+                        $("#bookingformno").val(padding(1, 6, '0'));
+                    }else{
+                        $("#bookingformno").val(padding(result[0].seq, 6, '0'));
+                    }
+        });
+        function getProductsModelsAmounts(){
+              var products = $('.product');
+              var models = $('.model');
+              var amounts = $('.amount');
+              var details = [];
+              for (var i = 0; i < amounts.length; i++) {
+                var detail = {};
+                detail.product = $(products[i]).val();
+                detail.model = $(models[i]).val();
+                detail.amount = $(amounts[i]).val();
+                details.push(detail);
+              }
+              return details;
+        }
+
+
+        $('#save,#printsave').click(function(){
+            var buttonvalue = $(this).val();
+            var date = $('#Date').val();
+            var time = calendar.time;
+            var bookingformno = $('#bookingformno').val();
+            var branch = $('#branch').val();
+            var name = $('#name').val();
+            var address = $('#addres').val();
+            var pincode = $('#pin').val();
+            var dob = $('#dob').val();
+            var contact = $('#contact').val();
+            var email = $('#email').val();
+            var processor =$('#processor').val();
+            var harddisk = $('#harddisk').val();
+            var ram = $('#ram').val();
+            var opticaldrive = $('#opticaldrive').val();
+            var screen = $('#screen').val();
+            var os = $('#os').val();
+            var graphic = $('#graphic').val();
+            var antivirus = $('#antivirus').val();
+            var office = $('#office').val();
+            var pmaDetails = getProductsModelsAmounts();
+            var total = $('#total').val();
+            var advance = $('#advance').val();
+            var balance = $('#balance').val();
+            var payment = $('#payment').val();
+            var chequeDetails = undefined;
+
+            if(payment === "cheque"){
+                chequeDetails = {};
+                chequeDetails.chequedate = $('#chequedate').val();
+                chequeDetails.chequeno = $('#chequeno').val();
+                chequeDetails.bankname = $('#bankname').val();
+                chequeDetails.chequeamount = $('#chequeamount').val();
+            }
+
+
+            var bookingData = {
+                    "sheetno":bookingformno,
+                    "date":date,
+                    "time":time,
+                    "branch":branch,
+                    "name":name,
+                    "address":address,
+                    "pincode":pincode,
+                    "dob":dob,
+                    "contact":contact,
+                    "emailid":email,
+                    "processor":processor,
+                    "harddisk":harddisk,
+                    "ram":ram,
+                    "opticaldrive":opticaldrive,
+                    "screen":screen,
+                    "operatingsystem":os,
+                    "graphic":graphic,
+                    "antivirus":antivirus,
+                    "msoffice":office,
+                    "productdetails":pmaDetails,
+                    "totalcost":total,
+                    "advancepayment":advance,
+                    "balance":balance,
+                    "paymentoption":payment,
+                    "chequedetails":chequeDetails
+                };
+            db.bookings.insert(bookingData, function (err, newDoc) {
+                if(!err){
+                    db.bookings.getAutoincrementId();
+                    //alert(JSON.stringify(newDoc) );
+                    if(buttonvalue === "Print & Save") {
+                        localStorage.printData = JSON.stringify(bookingData);
+                        //document.location.href = 'inwardsprint.html';
+                        document.location.href = './src/public/bookingprint.html';
+                        //alert("Print save alert");
+                    }
+                  else if(buttonvalue === "Save") {
+                        //alert(bookingData);
+                        location.reload();
+                    }
+                }
+            });
+
+        });
+
+    $('#cancel').click(function(){
+            //alert('Canceled');
+            document.location.href = 'index.html';
+    });
+
+    });
+</script>
+</body>
+
+</html>

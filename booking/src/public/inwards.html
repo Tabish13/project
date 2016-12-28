@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+	<script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+
+	<script type="text/javascript">
+		var moment = require('moment');
+    	var calendar = {};
+    	calendar.date = moment().format('DD/MM/YYYY');
+    	calendar.time = moment().format('hh:mm A');
+	</script>
+	<link rel="stylesheet" href="css/inward.css">
+
+
+</head>
+
+<body>
+	<h1>CYBER P<span class="glyphicon glyphicon-off"></span>INT</h1>
+	<div class="container" id="inwardnav">
+		<!-- <a href="index.html">Home</a>
+		<a id="right" href="displayinwards.html">Display Inwards</a> -->
+<div class="row" id="navi">
+<div class="col-xs-6">
+
+<a href="index.html">Home</a></div>
+<div class="col-xs-6"  id="right">
+
+		<a href="displayinwards.html">Display Inwards</a>
+</div>
+</div>
+	<h3>Inwards Form</h3><br>
+	<div class="container" id="inwardpage">
+		<!-- <a href="index.html">Home</a> -->
+
+		<div class="container ">
+			<div class="row">
+				<div class="col-xs-2">
+
+				</div>
+				<div class="col-xs-8 inpage">
+
+					<form>
+
+							<label>job sheet no : </label><input type="text" name="jobsheetno" id="jobsheetno" readonly><br>
+																<label>date : </label><input type="text" name="date" id="date" readonly><br>
+								<label>time : </label><input type="text" name="time" id="time" readonly>
+						<br>
+						<label>customer name :</label><input type="text" name="customerName" id="name"><br>
+						<label>address : </label><textarea rows="3" id="address"></textarea> <br>
+						<label>email id : </label><input type="email" name="emailid" id="emailid"><br>
+
+								<label>contact no : </label><input type="text" name="contactNo" id="mobile"><br>
+
+								<label>alternative contact : </label><input type="text" name="alternatnumber" id="altmobile"><br>
+
+								<label>service type : </label><select id="servicetype">
+              	<option value="In-Warranty">In-Warranty</option>
+              	<option value="Out-Warranty">Out-Warranty</option>
+              </select><br>
+
+								<label>system type: </label><select id="systemtype">
+                   	<option value="NoteBook">NoteBook</option>
+	                   <option value="Desktop">Desktop</option>
+                   	<option value="Printer">Printer</option>
+                   	<option value="Accessories">Accessories</option>
+									</select><br>
+						<label>accessories : </label><input type="text" name="accessories" id="accessories"><br>
+						<label>model discription : </label><input type="text" name="modeldiscription" id="modeldiscription"><br>
+						<label>service tag : </label><input type="text" name="servicetag" id="servicetag"><br>
+						<label>product condition : </label><textarea type="text" name="productcondition" id="productcondition"></textarea><br>
+						<label>problem reported by customer : </label><textarea type="text" name="problembycustomer" id="problembycustomer"></textarea><br>
+						<label>estimated cost : </label><input type="text" name="estimatedcost" id="estimatedcost"><br>
+						<input type="hidden" name="status" value="pending" id="status"><br>
+						<div id="buttons">
+							<input type="button" value="Print & Save" id="printsave">
+							<input type="button" value="Save" id="save">
+							<input type="button" value="Cancel" id="cancel">
+						</div><br>
+					</form>
+				</div>
+				<div class="col-xs-2">
+
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	<br>
+
+	<script type="text/javascript">
+		var gui = require('nw.gui');
+		var numeral = require('numeral');
+		//@ Padding for adding padding to the numbers padding(Number,No_Digit_ToPad, charachter_to_pad); e.g: padding(1,6,'0')
+		var padding = require('../util/padding.js');
+		// @Making db connection and autoload is false load db by calling -- db.(inward/outwards/bookings).loadDatabase(); --
+		var db = require('../db/db.js');
+		db.inwards.loadDatabase();
+		db.inwards.ensureIndex({
+			fieldName: 'sheetno',
+			unique: true
+		}, function(err) {});
+
+
+		//@Will execute after all document is ready i.e html file
+		$(document).ready(function() {
+			db.inwards.find({
+				_id: "__autoid__"
+			}, function(err, result) {
+				if (result.length === 0) {
+					db.inwards.getAutoincrementId();
+					$("#jobsheetno").val(padding(1, 6, '0'));
+				} else {
+					$("#jobsheetno").val(padding(result[0].seq, 6, '0'));
+				}
+			});
+			$("#date").val(calendar.date);
+			$("#time").val(calendar.time);
+		});
+		//@ On clicking Register event
+		$("#save,#printsave").click(function() {
+			var buttonvalue = $(this).val();
+			//@ ALL the values from form on press of save or Printsave
+			var sheetno = $("#jobsheetno").val();
+			var date = $("#date").val();
+			var time = $("#time").val();
+			var name = $("#name").val();
+			var mobile = $("#mobile").val();
+			var altmobile = $("#altmobile").val();
+			var address = $("#address").val();
+			var emailid = $("#emailid").val();
+			var servicetype = $("#servicetype").val();
+			var accessories = $("#accessories").val();
+			var systemtype = $("#systemtype").val();
+			var modeldiscription = $("#modeldiscription").val();
+			var servicetag = $("#servicetag").val();
+			var productcondition = $("#productcondition").val();
+			var problembycustomer = $("#problembycustomer").val();
+			var estimatedcost = $("#estimatedcost").val();
+			var status = $("#status").val();
+
+
+			var inwardsData = {
+				"sheetno": sheetno,
+				"date": date,
+				"time": time,
+				"customername": name,
+				"mobile": mobile,
+				"alternatemobile": altmobile,
+				"address": address,
+				"emailid": emailid,
+				"servicetype": servicetype,
+				"accessories": accessories,
+				"systemtype": systemtype,
+				"modeldescription": modeldiscription,
+				"servicetag": servicetag,
+				"productcondition": productcondition,
+				"problem": problembycustomer,
+				"estimatedcost": estimatedcost,
+				"status": status
+			};
+
+
+			db.inwards.insert(inwardsData, function(err, newDoc) {
+
+				if (!err) {
+					db.inwards.getAutoincrementId();
+					//alert(JSON.stringify(newDoc));
+					if (buttonvalue === "Print & Save") {
+						localStorage.printData = JSON.stringify(inwardsData);
+						//document.location.href = 'inwardsprint.html';
+						document.location.href = './src/public/inwardsprint.html';
+						//alert("Print save alert");
+					} else if (buttonvalue === "Save") {
+						location.reload();
+					}
+				}
+			});
+
+		});
+
+		//@On clicking Cancel event
+		$("#cancel").click(function() {
+			db.inwards.find().sort({
+				sheetno: -1
+			}).exec(function(err, docs) {
+				console.log(JSON.stringify(docs));
+			});
+			//alert('Canceled');
+			document.location.href = 'index.html';
+		});
+	</script>
+</body>
+
+</html>

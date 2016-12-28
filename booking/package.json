@@ -1,0 +1,24 @@
+{
+  "name": "booking",
+  "version": "1.0.0",
+  "description": "\"Booking Desktop APP for Cyber Point\"",
+  "main": "src/public/first.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "window": {
+    "title": "Services Management",
+    "icon": "./src/public/img/icon.png",
+    "show": false,
+    "toolbar": false
+  },
+  "author": "Welegans Team",
+  "license": "ISC",
+  "dependencies": {
+    "json2xls": "^0.1.2",
+    "moment": "^2.17.1",
+    "nedb": "^1.8.0",
+    "numeral": "^2.0.4",
+    "underscore": "^1.8.3"
+  }
+}

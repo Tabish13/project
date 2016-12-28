@@ -1,0 +1,102 @@
+.page{
+margin:0 4em;
+text-align: center;
+
+}
+
+h1{
+  font-weight: bold;
+  font-size: 2.7em;
+  text-align: center;
+  margin: 0;
+}
+h1 span{
+  font-size: 0.5em;
+  background-color: black;
+  color: #ad1305;
+  border-radius: 50%;
+  padding: 0.3em;
+  display: table;
+  vertical-align: middle;
+  margin-bottom: 0.4em;
+}
+#delllogo{
+  width: 2.5em;
+}
+#topright{
+border: 1px solid black;
+border-radius: 5px;
+margin:0 1em;
+}
+.start{
+  font-size: 1.1em;
+}
+#one, .two{
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.three{
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: justify;
+}
+.short{
+  width: 100%;
+  border: none;
+  /*border-bottom: 1px solid black;*/
+}
+.long{
+
+width: 100%;
+  border: none;
+  /*border-bottom: 1px solid black;*/
+}
+h5{
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+
+}
+.shortbox{
+  height: 2em;
+  border: none;
+}
+#pro{
+  margin-bottom: 1.08em;
+}
+#pro td textarea{
+  width: 100%;
+
+}
+#bankdetail{
+  text-align: center;
+}
+input{
+  width: 100%;
+}
+label{
+  font-size: 1.2em;
+}
+textarea{
+  resize: none;
+  height: 3.2em;
+  word-wrap: break-word;
+}
+.four {
+  text-align: left;
+  border: 1px solid black;
+height: 12em;
+}
+.fourth{
+  border-bottom: 1px solid black;
+
+}
+.fourend{
+  text-align: center;
+}
+.fourend .last{
+  border: none;
+}
+#lastul{
+  font-size: 1.2em;
+}

@@ -1,0 +1,101 @@
+body{
+  margin: 2em;
+}
+.page{
+text-align: center;
+
+}
+#delllogo{
+  margin: 1.8em;
+  width: 2.5em;
+}
+
+#toprighto{
+  border: 1px solid black;
+  border-radius: 5px;
+  margin:0 1em;
+}
+.start{
+  font-size: 1.1em;
+}
+#one, .two{
+  border: 1px solid black;
+  border-radius: 5px;
+}
+h1{
+  font-weight: bold;
+  font-size: 2.7em;
+  text-align: center;
+  margin: 0;
+  padding: 0.5em;
+}
+h1 span{
+  font-size: 0.5em;
+  background-color: black;
+  color: #ad1305;
+  border-radius: 50%;
+  padding: 0.3em;
+  display: table;
+  vertical-align: middle;
+  margin-bottom: 0.4em;
+}
+h3{
+  text-align: center;
+}
+.inpage{
+
+}
+label{
+  text-transform: capitalize;
+  padding: 0.8em 0.3em;
+}
+input, textarea{
+  border: none;
+  border-bottom: 1px solid black;
+
+}
+textarea{
+  width: 20em;
+  height: 4em;
+  resize: none;
+}
+.first input{
+  width: 63%;
+}
+textarea{
+  vertical-align: middle;
+}
+.second input, textarea{
+  width: 76%;
+}
+.second label{
+    width: 12em;
+}
+.third label{
+  width: 12em;
+}
+.third input{
+  width: 50%;
+}
+.four {
+  text-align: left;
+  border: 1px solid black;
+height: 12em;
+}
+.fourth{
+  border-bottom: 1px solid black;
+
+}
+.fourend{
+  text-align: center;
+}
+.fourend .last{
+  border: none;
+}
+#lastul{
+  font-size: 1.1em;
+}
+.foot{
+
+  text-align: center;
+}

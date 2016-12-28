@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="datatable/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="datatable/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" href="css/display.css">
+
+</head>
+<body>
+	<div class="row" id="navi">
+	<div class="col-xs-6">
+
+	<a href="index.html">Home</a></div>
+	<div class="col-xs-6"  id="right">
+
+			<a href="outwards.html">Outwards Form</a>
+	</div>
+	</div>
+
+<table id="outwardstable" class="display" cellspacing="0" width="100%">
+    </table>
+<script type="text/javascript">
+	var _ = require('underscore');
+	var db = require('../db/db.js');
+		db.outwards.loadDatabase();
+	var table;
+	var datatable = function(data){
+	 	return $('#outwardstable').DataTable( {
+	 		 destroy: true,
+	        data: data,
+	        order: [[ 0, "desc" ]],
+	        columns: [
+	        	{title: "Sheet No"},
+	            {title:"Inwards Sheet No"},
+	            { title: "Engineer Name" },
+	            { title: "Inwards Date"},
+	             {title: "Outwards Date"},
+	            {title: "Remarks"},
+	            { title: "Job Done" },
+	            { title: "Estimated Cost" },
+	            {title: "Total Cost"},
+	            {title: "" },
+	            {title: "" }
+	        ],
+	        "columnDefs": [ {
+	            "targets": -2,
+	            "data": null,
+	            "defaultContent": '<button value="edit" style="background-color: Green;border: none;cursor: pointer;color: white;padding: 5px 5px;">Edit</button>'
+	        },
+	        {
+	            "targets": -1,
+	            "data": null,
+	            "defaultContent": '<button value="reprint" style="background-color: Blue;border: none;cursor: pointer;color: white;padding: 5px 5px;">RePrint</button>'
+	        },
+	        {className: "dt-center", "targets": "_all"}]
+	    } );};
+var getData = function(){
+	var dataSet = [];
+
+	db.outwards.find().sort({ sheetno: -1 }).exec(function (err, docs) {
+	 if(!err){
+	 	_.each(docs, function(value) {
+	 		if(_.has(value, "sheetno") ){
+	 			var data =_.values(_.pick(value,'sheetno','inwardsheetno','engineername','inwardsdate','date','remarks','jobdone','inwardscost','totalcost'));
+				dataSet.push(data);
+	 		}
+		});
+		//console.log(dataSet);
+		//alert(dataSet);
+		table = datatable(dataSet);
+	 }
+	 else{
+	 	console.log(err);
+	 }
+	});
+}
+
+
+$(document).ready(function(){
+	getData();
+	 $('#outwardstable').on('click','button', function(){
+
+	 	var buttonvalue = $(this).attr("value");
+	 	var rowdata = table.row( $(this).parents('tr') ).data();
+	 	var outwardsheetno = rowdata[0];
+	 	var inwardssheetno = rowdata[1];
+	 	db.outwards.find({sheetno: outwardsheetno}, function(err, results){
+	 		var printData = _.pick(results[0],'sheetno','inwardsheetno','date','time','inwardsdate','inwardstime','inwardscost','customername','customernumber','jobdone','totalcost','engineername','remarks');
+	 		var fetchedoutdata = _.values(printData);
+	 		$('#outwardsheetno').val(fetchedoutdata[0]);
+	 		$('#inwardsheetno').val(fetchedoutdata[1]);
+	 		$('#date').val(fetchedoutdata[2]);
+	 		$('#time').val(fetchedoutdata[3]);
+	 		$('#inwardsdate').val(fetchedoutdata[4]);
+	 		$('#inwardstime').val(fetchedoutdata[5]);
+	 		$('#inwardscost').val(fetchedoutdata[6]);
+	 		$('#name').val(fetchedoutdata[7]);
+	 		$('#mobile').val(fetchedoutdata[8]);
+	 		$('#jobdone').val(fetchedoutdata[9]);
+	 		$('#totalcost').val(fetchedoutdata[10]);
+	 		$('#engineername').val(fetchedoutdata[11]);
+	 		$('#remark').val(fetchedoutdata[12]);
+
+
+	 		if(buttonvalue === "edit"){
+	 			$("#myModal").modal();
+	 			//alert('clicked '+buttonvalue);
+		 	}else if(buttonvalue === "reprint"){
+		 		localStorage.printData = JSON.stringify(printData);
+		 		localStorage.displayOutwards = "displayoutwards";
+		 		document.location.href = './src/public/outwardsprint.html';
+		 		//alert('clicked '+buttonvalue);
+		 	}
+	 	});
+	 	//alert(JSON.stringify(rowdata));
+	 });
+
+	$('#updating').click(function(){
+			var outwardsheetno = $('#outwardsheetno').val();
+	 		var inwardsheetno = $('#inwardsheetno').val();
+	 		var date = $('#date').val();
+	 		var time = $('#time').val();
+	 		var inwardsdate = $('#inwardsdate').val();
+	 		var inwardstime = $('#inwardstime').val();
+	 		var inwardscost = $('#inwardscost').val();
+	 		var name = $('#name').val();
+	 		var mobile = $('#mobile').val();
+	 		var jobdone = $('#jobdone').val();
+	 		var totalcost = $('#totalcost').val();
+	 		var engineername = $('#engineername').val();
+	 		var remarks = $('#remark').val();
+
+	 		var outwardsData = {
+				"sheetno": outwardsheetno,
+				"inwardsheetno":inwardsheetno,
+				"date":date,
+				"time":time,
+				"inwardsdate":inwardsdate,
+				"inwardstime":inwardstime,
+				"inwardscost":inwardscost,
+				"customername":name,
+				"customernumber":mobile,
+				"jobdone":jobdone,
+				"totalcost" : totalcost,
+				"engineername" : engineername,
+				"remarks" : remarks
+			};
+
+			db.outwards.update({sheetno:outwardsheetno},outwardsData,{},function(err, results){
+				alert('successfully update '+results+' document');
+				getData();
+			});
+
+	});
+
+
+});
+
+</script>
+
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Outwards</h4>
+        </div>
+        <div class="modal-body">
+     		<!-- fixed fields: <br> -->
+			<label>outwards sheet no: </label><input type="text" name="outwardsheetno" id="outwardsheetno" readonly><br>
+			<label>inwards sheet no: </label><input type="text" name="inwardsheetno" id="inwardsheetno" readonly><br>
+			<label>date: </label><input type="text" name="date" id="date" readonly><br>
+			<label>time: </label><input type="text" name="time" id="time" readonly><br>
+			<label>inwards date: </label><input type="text" name="inwardsdate" id="inwardsdate" readonly><br>
+			<label>inwards time: </label><input type="text" name="inwardstime" id="inwardstime" readonly><br>
+			<label>estimated cost: </label><input type="text" name="inwardscost" id="inwardscost" readonly><br>
+			<label>customer name: </label><input type="text" name="name" id="name" readonly><br>
+			<label>mobile: </label><input type="text" name="mobile" id="mobile" readonly><br>
+			<!-- editable fiels: <br><br> -->
+			<label>job done: </label><input type="text" name="jobdone" id="jobdone" ><br>
+			<label>total cost: </label><input type="text" name="totalcost" id="totalcost" ><br>
+			<label>engineer name: </label><input type="text" name="engineername" id="engineername" ><br>
+			<label>remarks: </label><input type="text" name="remark" id="remark" ><br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="updating">Submit</button>
+           <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

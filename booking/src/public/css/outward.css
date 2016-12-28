@@ -1,0 +1,76 @@
+h1{
+  font-weight: bold;
+  font-size: 2.7em;
+  text-align: center;
+  margin: 0;
+  padding: 0.5em;
+}
+h1 span{
+  font-size: 0.5em;
+  background-color: black;
+  color: #ad1305;
+  border-radius: 50%;
+  padding: 0.3em;
+  display: table;
+  vertical-align: middle;
+  margin-bottom: 0.4em;
+}
+#right{
+  text-align: right;
+}
+#navi a{
+  width: 100%;
+  margin: 1em 0.5em;
+  padding: 0.5em;
+background-color: white;
+border-radius: 7px;
+
+  color: black;
+  padding: 0.5em;
+}
+#navi a:active{
+  text-decoration: none;
+}
+#navi a:hover{
+  text-decoration: none;
+}
+
+h3{
+  text-align: center;
+}
+.inpage{
+  margin: 0 7em;
+  text-align: justify;
+}
+label{
+  text-transform: capitalize;
+  padding: 0.8em 0.3em;
+}
+input, textarea{
+  /*border: none;
+  border-bottom: 1px solid black;*/
+
+}
+textarea{
+  width: 20em;
+  height: 4em;
+  resize: none;
+}
+.one input{
+  width: 63%;
+}
+textarea{
+  vertical-align: middle;
+}
+.two input, textarea{
+  width: 76%;
+}
+.two label{
+    width: 12em;
+}
+.three label{
+  width: 12em;
+}
+.three input{
+  width: 50.5%;
+}

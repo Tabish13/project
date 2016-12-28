@@ -1,0 +1,35 @@
+body{
+  background: url("../img/bg.jpg") no-repeat;
+  background-size: cover;
+  }
+label, input{
+  text-transform: capitalize;
+    padding: 0 0.4em;
+}
+label{
+  padding: 0.3em 0.4em;
+}
+
+.top input{
+  width: 7em;
+
+}
+#right{
+  text-align: right;
+}
+#navi a{
+  width: 100%;
+  margin: 1em 0.5em;
+  padding: 0.5em;
+background-color: white;
+border-radius: 7px;
+
+  color: black;
+  padding: 0.5em;
+}
+#navi a:active{
+  text-decoration: none;
+}
+#navi a:hover{
+  text-decoration: none;
+}

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="datatable/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/printbooking.css">
+
+</head>
+
+<body>
+    <div class="container page">
+        <div class="row">
+            <div class="col-xs-2">
+                <img src="img/Dell_logo.png" id="delllogo">
+            </div>
+            <div class="col-xs-8">
+                <h1>CYBER P<span class="glyphicon glyphicon-off"></span>INT</h1>
+            </div>
+            <div class="col-xs-2">
+                <div id="topright">
+                <p >Booking<br> Form<br><span id="sheetno"> 000000</span></p>
+</div>
+</div>
+        </div>
+          <div class="row start">
+        <p id="one">HO(VASAI) : Shop No-22, Golden Park CHS, Vasai(w), Tel : 0250-2334411 / 6454844 / 9225137237</p>
+      </div>
+        <div class="row start">
+            <i>
+  <div class="col-xs-4 two">
+<p>DELL EXCLUSIVE STORE (VIRAR)<br>Twin tower, Tirupati nagar,<br>Phase-2, Virar(w)<br>Tel : 0250-6559996 / 7709244443</p>
+</div>
+<div class="col-xs-4 two">
+  <p>DELL EXCLUSIVE STORE (VASAI)<br>Landmark Menezes,<br>Manickpur Naka, Vasai(w)<br>Tel : 0250-65599599 / 9004654321</p>
+</div>
+<div class="col-xs-4 two">
+  <p>DELL EXCLUSIVE STORE (BHY)<br>Saroj Plaza, near Maxus Mall,<br>150 ft, Bhayander(w)<br>Tel : 022-655995999 / 9970681978</p>
+</div>
+</i>
+        </div>
+        <div class="row">
+
+            <div class="col-xs-6 three"><br>
+                <div class="row">
+                    <div class="col-xs-3"><label>Date : </label></div>
+                    <div class="col-xs-3"><input type="text" class="short" name="date" id="date"></div>
+                    <div class="col-xs-3"><label>Branch : </label></div>
+                    <div class="col-xs-3"><input type="text" class="short" name="branch" id="branch"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3"><label>Name : </label></div>
+                    <div class="col-xs-9"><textarea class="long" name="name" id="name"></textarea></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3"><label>Address : </label></div>
+                    <div class="col-xs-9"><textarea class="long" name="address" rows="3" id="address"></textarea></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3"><label>PIN : </label></div>
+                    <div class="col-xs-3"><input type="text" class="short" name="pin" id="pincode"></div>
+                    <div class="col-xs-3"><label>DOB : </label></div>
+                    <div class="col-xs-3"><input type="text" class="short" name="dob" id="dob"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3"><label>Contact : </label></div>
+                    <div class="col-xs-9"><input type="text" class="long" name="contact" id="contact"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3"><label>E-mail ID : </label></div>
+                    <div class="col-xs-9"><input type="email" class="long" name="email" id="emailid"></div>
+                </div>
+                <br>
+
+                <table border="1" id="pro">
+                    <tr>
+                        <td><label>Product</label></td>
+                        <td><label>Model</label></td>
+                        <td><label>Amount</label></td>
+                    </tr>
+                    <tr>
+                        <td><textarea class="shortbox" rows="2" name="product" id="product1"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="model" id="model1"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="amount" id="amount1"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><textarea class="shortbox" rows="2" name="product" id="product2"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="model" id="model2"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="amount" id="amount2"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><textarea class="shortbox" rows="2" name="product" id="product3"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="model" id="model3"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="amount" id="amount3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><textarea class="shortbox" rows="2" name="product" id="product4"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="model" id="model4"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="amount" id="amount4"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><textarea class="shortbox" rows="2" name="product" id="product5"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="model" id="model5"></textarea></td>
+                        <td><textarea class="shortbox" rows="2" name="amount" id="amount5"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><label>TOTAL</label></td>
+                        <td><input type="text" class="shortbox" name="total" id="total"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><label>ADVANCE</label></td>
+                        <td><input type="text" class="shortbox" name="advance" id="advance"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><label>BALANCE</label></td>
+                        <td><input type="text" class="shortbox" name="balance" id="balance"></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="col-xs-6 three">
+                <h5>SYSTEM CONFIGURATION</h5>
+                <table border="1" width=100%>
+                    <tr>
+                        <td><label>Processor</label></td>
+                        <td><input type="text" class="shortbox" name="processor" id="processor"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Hard Disk</label></td>
+                        <td><input type="text" class="shortbox" name="hdd" id="hdd"></td>
+                    </tr>
+                    <tr>
+                        <td><label>RAM</label></td>
+                        <td><input type="text" class="shortbox" name="ram" id="ram"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Optical Drive</label></td>
+                        <td><input type="text" class="shortbox" name="optical" id="opticaldrive"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Screen</label></td>
+                        <td><input type="text" class="shortbox" name="screen" id="screen"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Operating System</label></td>
+                        <td><input type="text" class="shortbox" name="os" id="os"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Graphic</label></td>
+                        <td><input type="text" class="shortbox" name="graphic" id="graphic"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Antivirus</label></td>
+                        <td><input type="text" class="shortbox" name="antivirus" id="antivirus"></td>
+                    </tr>
+                    <tr>
+                        <td><label>MS Office</label></td>
+                        <td><input type="text" class="shortbox" name="office" id="office"></td>
+                    </tr>
+
+                </table>
+                <span id="paymenttype"></span>
+                <h5>Cheque Details</h5>
+                <table border="1" width=100%>
+                    <tr>
+                        <td><label>Cheque Date</label></td>
+                        <td><input type="text" class="shortbox" name="cheqdate" id="cheqdate"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Cheque no</label></td>
+                        <td><input type="text" class="shortbox" name="cheqno" id="cheqno"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Bank Name</label></td>
+                        <td><input type="text" class="shortbox" name="bankname" id="bankname"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Amount</label></td>
+                        <td><input type="text" class="shortbox" name="amount" id="amount"></td>
+                    </tr>
+                </table>
+                <div id="bankdetail">
+                    <p><h5>Bank Details</h5>A/c name : Cyber Point<br>A/c No : 04087630001056<br>IFSC code : HDFC0000408</p>
+                </div>
+
+
+
+            </div>
+
+        </div>
+<div class="row">
+<div class="col-xs-8 four">
+  <br>
+<ul id="lastul">
+<li>Order once placed cannot be cancelled.</li>
+<li>Booking amount is non-refundable if the order is cancelled.</li>
+<li>Delivery will be processed only after the realization of the cheque into the bank account.</li>
+<li>Cheque realiztion time varies from bank to bank.</li>
+<li>Cheque/DD to be issued in the name of "CYBER POINT".</li>
+</ul>
+
+
+</div>
+<div class="col-xs-4 four">
+  <div class="row fourend fourth">
+    <label>CUSTOMER SIGN</label><br>
+<textarea type="text" class="last"></textarea>
+  </div>
+  <div class="row fourend">
+  <label>In-Charge</label>
+  <input type="text" class="last">
+</div>
+</div>
+</div>
+
+    </div>
+    <br>
+    <script type="text/javascript">
+    var numeral = require('numeral');
+     function closePrintView() {
+        if(localStorage.displayBooking == "displaybooking"){
+            window.localStorage.removeItem("displayBooking");
+            window.localStorage.removeItem("printData");
+            document.location.href = 'displaybooking.html';
+        }else{
+            window.localStorage.removeItem("printData");
+            document.location.href = 'index.html';
+        }
+            
+       }
+        $(document).ready(function(){
+            console.log(localStorage.printData);
+            var printingData = JSON.parse(localStorage.printData);
+                $('#sheetno').html(printingData.sheetno);
+                $('#date').val(printingData.date);
+                $('#branch').val(printingData.branch);
+                $('#name').val(printingData.name);
+                $('#address').val(printingData.address);
+                $('#pincode').val(printingData.pincode);
+                $('#dob').val(printingData.dob);
+                $('#contact').val(printingData.contact);
+                $('#emailid').val(printingData.emailid);
+                $('#processor').val(printingData.processor);
+                $('#hdd').val(printingData.harddisk);
+                $('#ram').val(printingData.ram);
+                $('#opticaldrive').val(printingData.opticaldrive);
+                $('#screen').val(printingData.screen);
+                $('#os').val(printingData.operatingsystem);
+                $('#graphic').val(printingData.graphic);
+                $('#antivirus').val(printingData.antivirus);
+                $('#office').val(printingData.msoffice);
+                $('#total').val(' Rs. '+printingData.totalcost.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,"));
+                $('#advance').val(' Rs. '+printingData.advancepayment.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,"));
+                $('#balance').val(' Rs. '+printingData.balance.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,"));
+                var products = printingData.productdetails;
+                for(i=1; i<=products.length; i++){
+                    if(i<=5){
+                        $('#product'+i).val($('#product'+i).val() + products[i-1].product);
+                        $('#model'+i).val($('#model'+i).val() +  products[i-1].model);
+                        $('#amount'+i).val($('#amount'+i).val() +' Rs. '+products[i-1].amount.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,"));
+                    }else{
+                        $('#pro > tbody > tr').eq( i-1 ).after('<tr><td><textarea class="shortbox" rows="2" name="product" value="'+products[i-1].product+'">'+products[i-1].product+'</textarea></td><td><textarea class="shortbox" rows="2" name="model" value="'+products[i-1].model+'">'+products[i-1].model+'</textarea></td><td><textarea class="shortbox" rows="2" name="amount" value=" Rs. '+products[i-1].amount.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,")+'"> Rs. '+products[i-1].amount.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,")+'</textarea></td></tr>');
+                    }
+                }
+
+            $('#paymenttype').html('<br><label>Payment Type:</label>  '+(printingData.paymentoption).toUpperCase());
+               var chequedetails = printingData.chequedetails;
+               if(chequedetails){
+                     $('#cheqdate').val(chequedetails.chequedate);
+               }else{
+                    $('#cheqdate').val("NA");
+               }
+               if(chequedetails){
+                     $('#cheqno').val(chequedetails.chequeno);
+               }else{
+                    $('#cheqno').val("NA");
+               }
+               if(chequedetails){
+                     $('#bankname').val(chequedetails.bankname);
+               }else{
+                    $('#bankname').val("NA");
+               }
+               if(chequedetails){
+                     $('#amount').val(' Rs. '+chequedetails.chequeamount.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,"));
+               }else{
+                    $('#amount').val("NA");
+               }
+               window.print();
+               setTimeout("closePrintView()", 50);
+        });
+    </script>
+</body>
+
+</html>

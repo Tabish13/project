@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript"> 
+		var indexgui = nw.Window.get();
+		 nw.Window.open('./src/public/welcome.html', {
+		                "transparent": true,
+		                'frame': false,
+		                "icon": "./src/public/img/icon.png",
+		                'position': 'center',
+		                "width": 475,
+		                "height": 250,
+		                 "show": true,
+		                "resizable": false,
+		                "fullscreen": false
+		            }, function(new_win){
+		            	console.log(new_win);
+						new_win.on ('loaded', function(){              
+						  setTimeout(function(){   
+						   		new_win .close(true);
+						   		indexgui.show();   // get the current window and show
+							    indexgui.maximize();         
+							    new_win  = null; 
+						   },1000);
+						});
+		            });
+	</script>
+	<link rel="stylesheet" href="css/home.css">
+
+</head>
+<body>
+	<h1>CYBER P<span class="glyphicon glyphicon-off"></span>INT</h1>
+<div class="container">
+<div class="row ">
+<div class="col-xs-6 tile"><a href="inwards.html" class="categories">Inwards Form </a></div>
+<div class="col-xs-6 tile"><a href="displayinwards.html" class="categories">Display Inwards </a></div></div>
+
+<div class="row ">
+	<div class="col-xs-6 tile"><a href="outwards.html"  class="categories">Outwards Form </a></div>
+	<div class="col-xs-6 tile"><a href="displayoutwards.html"  class="categories">Display Ou wards </a></div></div>
+
+<div class="row ">
+	<div class="col-xs-6 tile"><a href="booking.html"  class="categories">Booking Form </a></div>
+<div class="col-xs-6 tile"><a href="displaybooking.html"  class="categories">Display Booking </a></div></div>
+<div class="row">
+	<div class="col-xs-6 tile"><a href="backup.html"  class="categories">Backup Todays Data</a></div>
+</div>
+</div>
+</body>
+</html>

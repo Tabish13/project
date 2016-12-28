@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/booking.css">
+</head>
+<body>
+<script type="text/javascript">
+	var fs = require('fs');
+	var _ = require('underscore');
+	var moment = require('moment');
+	var calendar = {};
+	calendar.date = moment().format('DD/MM/YYYY');
+	calendar.filenameDate = moment().format('DD-MM-YYYY');
+	calendar.filenameTime = moment().format('hh.mm A');
+	var json2xls = require('json2xls');
+	var db = require('../db/db.js');
+	db.inwards.loadDatabase();
+	db.outwards.loadDatabase();
+	db.bookings.loadDatabase();
+	if (!fs.existsSync('D:/ManageAppData')){
+		    fs.mkdirSync('D:/ManageAppData');
+		  }
+	db.inwards.find({date:calendar.date}, function(err, results){
+		var inwardsXlsData = [];
+		for (var i = 0; i < results.length; i++) {
+			var inwardsData = _.pick(results[i], 'sheetno','date','time','customername','mobile','alternatemobile','address','emailid','servicetype','accessories','systemtype','modeldescription','servicetag','productcondition','problem','estimatedcost','status');
+			var inwardsValues = _.values(inwardsData);
+			var inwardsKeys = ["Job Sheet No","Date","Time","Customer Name","Contact Number","Alternate Contact Number","Address","Email ID","Service Type","Accessories","System Type","Model Description","Service Tag","Product Condition","Customer Problem","Estimated Cost"];
+			var inwardsNewData = _.object(inwardsKeys, inwardsValues);
+			inwardsXlsData.push(inwardsNewData);
+		}
+		var inwardsxls = json2xls(inwardsXlsData);
+		var inwardsdir = 'D:/ManageAppData/InwardsData';
+		if (!fs.existsSync(inwardsdir)){
+		    fs.mkdirSync(inwardsdir);
+		  }
+		fs.writeFileSync(inwardsdir+'/{'+calendar.filenameDate+'}{'+calendar.filenameTime+'}.xlsx', inwardsxls, 'binary');
+	});
+	
+	db.outwards.find({date:calendar.date}, function(err, results){
+		var outwardsXlsData = [];
+		for (var i = 0; i < results.length; i++) {
+			var outwardsData = _.pick(results[i],'sheetno','inwardsheetno','date','time','inwardsdate','inwardstime','inwardscost','customername','customernumber','jobdone','totalcost','engineername','remarks');
+			var outwardsValues = _.values(outwardsData);
+			var outwardsKeys = ['Outwards Sheet No','Inwards Sheet No','Outwards Date','Outwards Time','Inwards Date','Inwards Time','Estimated Inwards Cost','Customer Name','Contact Number','Job Done','Total Cost','Engineer Name','Remarks'];
+			var outwardsNewValues = _.object(outwardsKeys, outwardsValues);
+			outwardsXlsData.push(outwardsNewValues);
+		}
+		var outwardsxls = json2xls(outwardsXlsData);
+		var outwardsdir = 'D:/ManageAppData/OutwardsData';
+		if (!fs.existsSync(outwardsdir)){
+		    fs.mkdirSync(outwardsdir);
+		  }
+		fs.writeFileSync(outwardsdir+'/{'+calendar.filenameDate+'}{'+calendar.filenameTime+'}.xlsx', outwardsxls, 'binary');
+	});
+	db.bookings.find({date:calendar.date}, function(err, results){
+		var bookingXlsData = [];
+		
+		for (var i = 0; i < results.length; i++) {
+			var bookingData = _.pick(results[i],'sheetno','date','time','branch','name','address','pincode','dob','contact','emailid','processor','harddisk','ram','opticaldrive','screen','operatingsystem','graphic','antivirus','msoffice','totalcost','advancepayment','balance','paymentoption');
+			var bookingValues = _.values(bookingData);
+			var bookingKeys = ['Booking Sheet No','Date','Time','Branch','Name','Address','Pincode','Date Of Birth','Contact Number','Email ID','Processors','Hard Disk','RAM','Optical Drive','Screen','Operating System','Graphic','Anti-Virus','MS Office','Total Cost','Advance Payments','Balance','Payment Option'];
+			var bookingNewValues = _.object(bookingKeys, bookingValues);
+			var productDetails = results[i].productdetails;
+			var chequeDetails = results[i].chequedetails;	
+			if(chequeDetails){
+				bookingNewValues = _.extend(bookingNewValues, {"Cheque Date": chequeDetails.chequedate,"Cheque Number":chequeDetails.chequeno,"Bank Name":chequeDetails.bankname,"Cheque Amount":chequeDetails.chequeamount});
+			}
+			else {
+				bookingNewValues = _.extend(bookingNewValues, {"Cheque Date": "NA","Cheque Number":"NA","Bank Name":"NA","Cheque Amount":"NA"});
+			}
+			var product = "";
+			var model = "";
+			var amount = "";
+			for (var j = 0; j < productDetails.length; j++) {
+				product = product + productDetails[j].product+" , ";
+				model = model + productDetails[j].model+" , ";
+				amount = amount + productDetails[j].amount+" , ";
+			}
+			bookingNewValues = _.extend(bookingNewValues,{"Products":product,"Models":model,"Amounts":amount});
+
+			bookingXlsData.push(bookingNewValues);
+			
+		}
+		if(bookingXlsData.length === 0){
+			var bookingKeys = ['Booking Sheet No','Date','Time','Branch','Name','Address','Pincode','Date Of Birth','Contact Number','Email ID','Processors','Hard Disk','RAM','Optical Drive','Screen','Operating System','Graphic','Anti-Virus','MS Office','Total Cost','Advance Payments','Balance','Payment Option'];
+			var bookingValues =  ['','','','','','','','','','','','','','','','','','','','','','',''];
+			bookingXlsData.push(_.object(bookingKeys,bookingValues));
+				alert(JSON.stringify(bookingXlsData));
+		}
+		var bookingsxls = json2xls(bookingXlsData);
+		var bookingsdir = 'D:/ManageAppData/BookingData';
+		if (!fs.existsSync(bookingsdir)){
+		    fs.mkdirSync(bookingsdir);
+		  }
+		fs.writeFileSync(bookingsdir+'/{'+calendar.filenameDate+'}{'+calendar.filenameTime+'}.xlsx', bookingsxls, 'binary');
+		//alert(JSON.stringify(results));
+		
+	});
+	$(document).ready(function(){
+		document.location.href = 'index.html';
+	});
+</script>
+<h1>backing up data please wait...</h1>
+</body>
+</html>

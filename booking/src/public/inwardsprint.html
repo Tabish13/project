@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+  <script type="text/javascript" src="jquery/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+
+  <link rel="stylesheet" href="css/inwardprint.css">
+
+</head>
+
+<body>
+
+  <div id="print"></div>
+  <script type="text/javascript">
+  function closePrintView() {
+    if(localStorage.displayInwards === "displayinwards"){
+        window.localStorage.removeItem("displayInwards");
+        window.localStorage.removeItem("printData");
+        document.location.href = 'displayinwards.html';
+    }else{
+      window.localStorage.removeItem("printData");
+      document.location.href = 'index.html';
+    }
+      
+    }
+    $(document).ready(function() {
+      console.log(localStorage.printData);
+      var printdata = JSON.parse(localStorage.printData);
+
+        $('#inwardsheetno').html(printdata.sheetno);
+        $('#jobsheetno').val(printdata.sheetno);
+        $('#date').val(printdata.date);
+        $('#time').val(printdata.time);
+        $('#name').val(printdata.customername);
+        $('#address').val(printdata.address);
+        $('#emailid').val(printdata.emailid);
+        $('#mobile').val(printdata.mobile);
+        $('#altmobile').val(printdata.alternatemobile);
+        $('#servicetype').val(printdata.servicetype);
+        $('#systemtype').val(printdata.systemtype);
+        $('#accessories').val(printdata.accessories);
+        $('#servicetag').val(printdata.servicetag);
+        $('#productcondition').val(printdata.productcondition);
+        $('#problembycustomer').val(printdata.problem);
+        $('#estimatedcost').val(printdata.estimatedcost);
+      window.print();
+      setTimeout("closePrintView()", 50);
+      closePrintView();
+    });
+
+    
+  </script>
+
+  <div class="container page">
+    <div class="row">
+      <div class="col-xs-2">
+        <img src="img/Dell_logo.png" id="delllogo">
+      </div>
+      <div class="col-xs-8">
+        <h1>CYBER P<span class="glyphicon glyphicon-off"></span>INT</h1>
+      </div>
+      <div class="col-xs-2" >
+        <div id="toprighto">
+          <p>Inwards<br> Form<br><span id="inwardsheetno"> 000000</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="row start">
+      <p id="one">HO(VASAI) : Shop No-22, Golden Park CHS, Vasai(w), Tel : 0250-2334411 / 6454844 / 9225137237</p>
+    </div>
+    <div class="row start">
+      <i>
+<div class="col-xs-4 two">
+<p>DELL EXCLUSIVE STORE (VIRAR)<br>Twin tower, Tirupati nagar,<br>Phase-2, Virar(w)<br>Tel : 0250-6559996 / 7709244443</p>
+</div>
+<div class="col-xs-4 two">
+<p>DELL EXCLUSIVE STORE (VASAI)<br>Landmark Menezes,<br>Manickpur Naka, Vasai(w)<br>Tel : 0250-65599599 / 9004654321</p>
+</div>
+<div class="col-xs-4 two">
+<p>DELL EXCLUSIVE STORE (BHY)<br>Saroj Plaza, near Maxus Mall,<br>150 ft, Bhayander(w)<br>Tel : 022-655995999 / 9970681978</p>
+</div>
+</i>
+    </div>
+  </div><br>
+  <!-- <h3>Inwards Form</h3> -->
+  <div class="container inpage">
+    <form>
+      <div class="row first">
+        <div class="col-xs-4">
+          <label>job sheet no : </label><input type="text" name="jobsheetno" id="jobsheetno" readonly>
+        </div>
+        <div class="col-xs-4">
+          <label>date : </label><input type="text" name="date" id="date" readonly>
+        </div>
+        <div class="col-xs-4">
+          <label>time : </label><input type="text" name="time" id="time" readonly>
+        </div>
+      </div><br>
+      <div class="second">
+        <label>customer name :</label><input type="text" name="customerName" id="name" style="text-transform: capitalize"><br>
+
+        <label>address : </label><textarea rows="3" id="address"></textarea>
+        <br><br>
+        <label>email id : </label><input type="email" name="emailid" id="emailid">
+
+        <div class="row third">
+          <div class="col-xs-6">
+            <label>contact no : </label><input type="text" name="contactNo" id="mobile"><br>
+
+          </div>
+          <div class="col-xs-6">
+            <label>alternative contact : </label><input type="text" name="alternatnumber" id="altmobile">
+          </div>
+        </div>
+
+        <div class="row third">
+          <div class="col-xs-6">
+            <label>service type : </label>
+            <input type="text" id="servicetype">
+          </div>
+          <div class="col-xs-6">
+
+            <label>system type: </label>
+            <input type="text" id="systemtype">
+          </div>
+        </div>
+        <label>accessories: </label><input type="text" name="accessories" id="accessories"><br>
+
+        <label>model discription: </label><input type="text" name="modeldiscription" id="modeldiscription"><br>
+        <label>service tag: </label><input type="text" name="servicetag" id="servicetag"><br>
+        <label>product condition: </label><textarea type="text" name="productcondition" id="productcondition"></textarea><br>
+        <label>problem reported by customer: </label><textarea type="text" name="problembycustomer" id="problembycustomer"></textarea><br>
+        <label>estimated cost: </label><input type="text" name="estimatedcost" id="estimatedcost"><br>
+      </div>
+      <input type="hidden" name="status" value="pending" id="status">
+
+    </form>
+  </div><br>
+  <div class="container">
+    <div class=" row foot">
+    <div class="col-xs-8 four">
+      <br>
+      <ul id="lastul">
+        <li>Order once placed cannot be cancelled.</li>
+        <li>Booking amount is non-refundable if the order is cancelled.</li>
+        <li>Delivery will be processed only after the realization of the cheque into the bank account.</li>
+        <li>Cheque realiztion time varies from bank to bank.</li>
+        <li>Cheque/DD to be issued in the name of "CYBER POINT".</li>
+      </ul>
+
+
+    </div>
+    <div class="col-xs-4 four">
+      <div class="row fourend fourth">
+        <label>CUSTOMER SIGN</label><br>
+        <textarea type="text" class="last"></textarea>
+      </div>
+      <div class="row fourend">
+        <label>In-Charge</label>
+        <input type="text" class="last">
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
