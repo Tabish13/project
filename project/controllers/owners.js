@@ -4,7 +4,7 @@ function owner()
 {
 	this.create = function(data, cb){
 		var registerData = helper.createModel(data);
-		if(registerData.owner_fname && registerData.owner_lname  &&registerData.owner_phone && registerData.owner_email &&registerData.bz_name &&registerData.bz_address && registerData.category && registerData.description ){
+		if(registerData.owner_fname && registerData.owner_lname  && registerData.owner_phone && registerData.owner_email && registerData.bz_name && registerData.bz_address && registerData.category && registerData.description ){
 			ownersModel.create(registerData, cb);
 		}else{
 			cb("Insufficient parameter", { status: 'failed' });

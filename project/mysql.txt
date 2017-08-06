@@ -1,0 +1,17 @@
+create table owner_details (
+		srno  INT NOT NULL AUTO_INCREMENT,
+		owner_fname varchar(30),
+	 	owner_lname varchar(30),
+	 	owner_phone varchar(12),
+	 	owner_email varchar(255),
+	 	bz_name varchar(255),
+	 	bz_address varchar(255),
+	 	category varchar(30),
+		description varchar(255),
+		primary key (srno)
+
+);
+
+create table categories(
+ category varchar(255)
+);
